@@ -21,6 +21,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.regex.Pattern;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,8 +45,10 @@ import com.google.bitcoin.protocols.payments.PaymentRequestException.PkiVerifica
 import com.google.bitcoin.uri.BitcoinURI;
 import com.google.bitcoin.uri.BitcoinURIParseException;
 
+import de.schildbach.wallet.BitidIntent;
 import de.schildbach.wallet.Constants;
 import de.schildbach.wallet.PaymentIntent;
+import de.schildbach.wallet.util.Bitid;
 import de.schildbach.wallet.util.Io;
 import de.schildbach.wallet.util.PaymentProtocol;
 import de.schildbach.wallet.util.Qr;
@@ -121,6 +125,24 @@ public abstract class InputParser
 					error(R.string.input_parser_invalid_bitcoin_uri, input);
 				}
 			}
+      else if (input.startsWith("digiid:"))
+      {
+          try
+          {
+              final URI bitidUri = new URI(input);
+
+              if (Bitid.checkBitidUriValidity(bitidUri)) 
+                  handleBitidIntent(BitidIntent.fromBitidUri(bitidUri));
+              else
+                  error(R.string.input_parser_invalid_bitid_uri, input);
+          }
+          catch (final URISyntaxException x)
+          {
+              log.info("got invalid digiid uri: '" + input + "'", x);
+
+              error(R.string.input_parser_invalid_bitid_uri, input);
+          }
+      }
 			else if (PATTERN_BITCOIN_ADDRESS.matcher(input).matches())
 			{
 				try
@@ -316,6 +338,8 @@ public abstract class InputParser
 	}
 
 	protected abstract void handlePaymentIntent(@Nonnull PaymentIntent paymentIntent);
+
+  protected abstract void handleBitidIntent(@Nonnull BitidIntent bitidIntent);
 
 	protected abstract void handleDirectTransaction(@Nonnull Transaction transaction);
 

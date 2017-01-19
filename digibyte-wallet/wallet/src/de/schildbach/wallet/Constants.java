@@ -101,6 +101,12 @@ public class Constants
 
 	public static final int UBTC_MAX_PRECISION = 2;
 
+  public static final String BITID_PARAM_NONCE = "x";
+  public static final String BITID_PARAM_UNSECURE= "u";
+  public static final String BITID_PARAM_ADDRESS = "address";
+  public static final String BITID_PARAM_SIGNATURE = "signature";
+  public static final String BITID_PARAM_URI = "uri";
+
 
 	public static final String REPORT_SUBJECT_ISSUE = "Reported issue";
 	public static final String REPORT_SUBJECT_CRASH = "Crash report";

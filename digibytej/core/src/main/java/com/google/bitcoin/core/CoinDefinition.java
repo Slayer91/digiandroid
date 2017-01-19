@@ -152,20 +152,7 @@ public class CoinDefinition {
 
     //net.cpp strDNSSeed
     static public String[] dnsSeeds = new String[] {
-					"digibytenet.com", 
-					"digibytenetwork.com",
-          "digiexplorer.info",
-          "52.160.104.172",
-          "23.99.90.8",
-          "40.69.33.153",
-          "13.79.173.129",
-          "157.161.128.58",
-          "37.187.88.140",
-          "176.9.61.40",
-          "81.26.143.178",
-          "62.149.25.99",
-          "62.43.212.93",
-          "195.154.223.134"
+					"seed.digibyte.co"
     };
 
     public static int minBroadcastConnections = 1;   //0 for default; we need more peers.
